@@ -1,0 +1,8 @@
+{
+  "name": "vercel-apk-service",
+  "version": "1.0.0",
+  "description": "A Vercel service for serving leanback.json and redirecting APK downloads.",
+  "dependencies": {
+    "node-fetch": "^3.6.0"
+  }
+}
