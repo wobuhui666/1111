@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/apk/release/:filename",
+      "destination": "/api/handler?filename=:filename"
+    }
+  ]
+}
