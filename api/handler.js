@@ -3,7 +3,7 @@
 // 直接使用全局的 fetch API
 
 // 定义远程 urls.json 文件的 URL
-const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/urls.json';
+const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/11111/refs/heads/main/urls.json';
 
 // 一个异步函数，用于从远程 URL 获取并解析 urls.json
 async function fetchApkUrls() {
@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
 
   if (filename === 'leanback.json') {
     // 处理 leanback.json 请求 (仍然直接从其自己的 GitHub URL 获取)
-    const githubRawUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/leanback.json';
+    const githubRawUrl = 'https://raw.githubusercontent.com/wobuhui666/11111/refs/heads/main/leanback.json';
     try {
       // 直接使用全局的 fetch
       const response = await fetch(githubRawUrl);
