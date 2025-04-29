@@ -3,7 +3,7 @@
 // 直接使用全局的 fetch API
 
 // 定义远程 urls.json 文件的 URL
-const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/urls.json';
+const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/11111/refs/heads/main/urls.json';
 
 // 定义缓存时间和缓存变量 (单位：毫秒)
 const CACHE_DURATION = 5 * 60 * 1000; // 例如：缓存 5 分钟
@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
   if (filename === 'leanback.json') {
     // 处理 leanback.json 请求 (仍然直接从其自己的 GitHub URL 获取)
-    const githubRawUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/leanback.json';
+    const githubRawUrl = 'https://raw.githubusercontent.com/wobuhui666/11111/refs/heads/main/leanback.json';
     try {
       const response = await fetch(githubRawUrl);
 
