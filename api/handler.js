@@ -1,5 +1,6 @@
 // api/handler.js
-const fetch = require('node-fetch'); // Vercel 支持 node-fetch 或原生 fetch (如果环境支持)
+// 移除: const fetch = require('node-fetch'); // Vercel 支持 node-fetch 或原生 fetch (如果环境支持)
+// 直接使用全局的 fetch API
 
 // 定义远程 urls.json 文件的 URL
 const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/urls.json';
@@ -8,6 +9,7 @@ const githubUrlsJsonUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/ref
 async function fetchApkUrls() {
   console.log(`尝试从 ${githubUrlsJsonUrl} 获取 APK URL 列表...`);
   try {
+    // 直接使用全局的 fetch
     const response = await fetch(githubUrlsJsonUrl);
 
     if (!response.ok) {
@@ -30,12 +32,8 @@ async function fetchApkUrls() {
 }
 
 // 在函数实例启动时（或保持活跃时）异步加载 APK URL 列表
-// 这是一个 Promise，它将在 fetchApkUrls 完成时 resolve 或 reject
 let apkUrlsPromise = fetchApkUrls();
 
-// 注意：这个 Promise 只在函数实例第一次启动或空闲一段时间后重新激活时运行一次。
-// 这意味着如果在函数实例运行时远程 urls.json 发生变化，当前实例会使用旧数据，
-// 直到新的函数实例启动。对于大多数场景，这种“最终一致性”是可以接受的。
 
 module.exports = async (req, res) => {
   // 从请求参数中获取文件名 (通过 vercel.json 的重写规则传递过来)
@@ -53,6 +51,7 @@ module.exports = async (req, res) => {
     // 处理 leanback.json 请求 (仍然直接从其自己的 GitHub URL 获取)
     const githubRawUrl = 'https://raw.githubusercontent.com/wobuhui666/1111/refs/heads/main/leanback.json';
     try {
+      // 直接使用全局的 fetch
       const response = await fetch(githubRawUrl);
 
       if (!response.ok) {
@@ -78,19 +77,13 @@ module.exports = async (req, res) => {
     let apkUrls;
     try {
       // 等待获取 apkUrlsPromise 的结果
-      // 如果之前获取成功，这里会立即得到结果
-      // 如果之前获取失败，这里会重新抛出错误
-      // 如果是新的函数实例，这里会等待 fetchApkUrls 完成
       apkUrls = await apkUrlsPromise;
     } catch (error) {
-      // 如果获取 urls.json 失败 (无论是初始化时还是本次请求首次加载时)
+      // 如果获取 urls.json 失败
       console.error("无法获取 APK URL 列表，可能由于远程文件加载失败。", error);
       res.status(500).send("Internal Server Error: Could not load APK URL data.");
-      // 可选：如果获取失败，可以尝试重新触发一次获取，但要小心循环
-      // apkUrlsPromise = fetchApkUrls();
       return;
     }
-
 
     // 检查是否成功获取了 apkUrls 数据并且其中包含请求的文件名
     if (apkUrls && typeof apkUrls === 'object' && apkUrls[filename]) {
